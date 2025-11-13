@@ -1,0 +1,211 @@
+.hero {
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #fffaf8 0%, #fff2ec 40%, #fffaf8 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate; /* keeps pattern/vignette blending contained */
+}
+
+/* Pattern overlays base (shared frame) */
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2; /* below .hero-content (z=5), above gradient */
+}
+
+/* ===== Pattern: DOTS ===== */
+.hero--dots::before {
+  background-image: radial-gradient(rgba(255, 107, 53, 0.09) 1.2px, transparent 1.2px);
+  background-size: 26px 26px;
+  opacity: 1;
+}
+
+/* ===== Pattern: GRID ===== */
+.hero--grid::before {
+  background-image:
+    linear-gradient(rgba(255, 107, 53, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 107, 53, 0.08) 1px, transparent 1px);
+  background-size: 34px 34px, 34px 34px;
+  background-position: -1px -1px, -1px -1px;
+}
+
+/* ===== Pattern: NOISE ===== */
+.hero--noise::before {
+  background-image: url("data:image/svg+xml;utf8,\
+  <svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'>\
+    <filter id='n'>\
+      <feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/>\
+      <feColorMatrix type='saturate' values='0'/>\
+      <feComponentTransfer><feFuncA type='table' tableValues='0 0.08'/></feComponentTransfer>\
+    </filter>\
+    <rect width='100%%' height='100%%' filter='url(%23n)'/>\
+  </svg>");
+  background-size: 220px 220px;
+  opacity: 1;
+}
+
+/* subtle parallax pan (optional) */
+@keyframes subtlePan {
+  from { transform: translate3d(0,0,0) }
+  to   { transform: translate3d(-2%, -2%, 0) }
+}
+.hero--noise::before,
+.hero--dots::before,
+.hero--grid::before {
+  animation: subtlePan 60s linear infinite;
+}
+
+/* vignette to frame the title slightly */
+.hero::after {
+  background: radial-gradient(120% 120% at 50% 20%,
+    transparent 0%,
+    rgba(255, 107, 53, 0.05) 55%,
+    rgba(0,0,0,0.03) 85%,
+    rgba(0,0,0,0.05) 100%);
+  mix-blend-mode: multiply;
+  opacity: .6;
+}
+
+/* Content */
+.hero-content {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  max-width: 80%;
+  padding: 0 1rem;
+}
+
+.hero-title {
+  font-size: 5.5rem;
+  font-weight: 800;
+  color: transparent;
+  margin: 0;
+  line-height: 1;
+  letter-spacing: 6px;
+  text-transform: lowercase;
+  display: inline-block;
+  position: relative;
+}
+
+.main-title {
+  font-family: "Universo", sans-serif;
+  font-size: 6rem;
+  font-weight: 900;
+  letter-spacing: 8px;
+  background: linear-gradient(45deg, #ff6b35, #d65e14);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.main-title .line1,
+.main-title .line2 {
+  display: block;
+  width: max-content;
+}
+
+.hero-tagline {
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #333;
+  opacity: 0;
+  animation: fadeInUp 1s ease 0.5s forwards;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Decoration / Rings */
+.title-decoration {
+  position: absolute;
+  z-index: 10;
+  width: 80px;
+  height: 80px;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+}
+
+.ring-container {
+  width: 80px;
+  height: 80px;
+  position: relative;
+  z-index: 10;
+}
+
+.ring {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  z-index: 10;
+}
+
+.outer-ring { animation: rotateClockwise 8s linear infinite; }
+.inner-ring { animation: rotateCounterClockwise 6s linear infinite; }
+
+.ball { position: absolute; border-radius: 50%; z-index: 10; }
+.outer-ball { border: 5px solid #6c757d; background: transparent; }
+.inner-ball { background: #ff6b35; }
+
+@keyframes rotateClockwise { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes rotateCounterClockwise { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .hero-content { max-width: 90%; }
+  .main-title { font-size: 4.8rem; }
+  .hero-tagline { font-size: 1rem; letter-spacing: 3px; }
+  .hero-title { font-size: 4.5rem; }
+
+  /* Lighter ring on tablet */
+  .outer-ball { border-width: 3px; }
+  .ring-container { transform: scale(0.85); transform-origin: center; }
+}
+
+@media (max-width: 768px) {
+  .hero-content { max-width: 95%; padding: 0 0.5rem; }
+  .main-title { font-size: 3.6rem; letter-spacing: 4px; }
+  .hero-tagline { font-size: 0.9rem; letter-spacing: 2px; margin-top: 1.5rem; }
+  .hero-title { font-size: 3.5rem; }
+  .title-decoration { width: 60px; height: 60px; }
+  .ring-container { width: 60px; height: 60px; }
+
+  .outer-ball { border-width: 3px; }
+  .ring-container { transform: scale(0.8); transform-origin: center; }
+}
+
+@media (max-width: 480px) {
+  .hero-content { max-width: 100%; }
+  .main-title { font-size: 2.8rem; letter-spacing: 3px; }
+  .hero-tagline { font-size: 0.75rem; letter-spacing: 1.5px; margin-top: 1rem; padding: 0 1rem; }
+  .hero-title { font-size: 2.5rem; }
+  .title-decoration { width: 44px; height: 44px; }
+  .ring-container { width: 44px; height: 44px; }
+
+  .outer-ball { border-width: 2px; }
+  .ring-container { transform: scale(0.7); transform-origin: center; }
+
+  /* soften overlays on mobile */
+  .hero--dots::before { background-size: 22px 22px; }
+  .hero--grid::before { background-size: 28px 28px, 28px 28px; }
+  .hero::after { opacity: .45; }
+}
