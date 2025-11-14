@@ -122,6 +122,30 @@ const DataProwessSection = ({ pattern = "gird" }) => {
           deco.style.pointerEvents = "none";
         }
       }
+
+      // Lock title lines after initial layout
+      lockTitleLines();
+    };
+
+    // --- Lock title layout after fonts / initial placement to avoid reflow collapse ---
+    const lockTitleLines = () => {
+      try {
+        const title = heroTitleRef.current;
+        const l1 = title?.querySelector('.line1');
+        const l2 = title?.querySelector('.line2');
+        if (title && l1 && l2) {
+          // force inline-flex and block children (defensive)
+          title.style.display = 'inline-flex';
+          title.style.flexDirection = 'column';
+          l1.style.whiteSpace = 'nowrap';
+          l2.style.whiteSpace = 'nowrap';
+          // ensure container doesn't shrink too small during late font load
+          const w = Math.max(title.getBoundingClientRect().width, (l1.getBoundingClientRect().width + 8));
+          title.style.minWidth = `${Math.ceil(w)}px`;
+        }
+      } catch (e) {
+        // ignore
+      }
     };
 
     const positionBalls = () => {
@@ -132,9 +156,19 @@ const DataProwessSection = ({ pattern = "gird" }) => {
     };
 
     if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(positionBalls);
+      document.fonts.ready.then(() => {
+        positionBalls();
+        lockTitleLines();
+        setTimeout(lockTitleLines, 120);
+      }).catch(() => {
+        positionBalls();
+        lockTitleLines();
+        setTimeout(lockTitleLines, 120);
+      });
     } else {
       positionBalls();
+      lockTitleLines();
+      setTimeout(lockTitleLines, 120);
     }
 
     let resizeTimeout;
@@ -168,12 +202,10 @@ const DataProwessSection = ({ pattern = "gird" }) => {
               <div className="ring inner-ring" ref={innerRingRef}></div>
             </div>
           </div>
-          <div className="main-title">
-            <span className="line1">data</span>
-            <span className="line2" ref={line2Ref}>
-              prowess
-            </span>
-          </div>
+          <span className="main-title" role="text" aria-label="data prowess">
+            <span className="title-line line1" aria-hidden="false">data</span>
+            <span className="title-line line2" ref={line2Ref} aria-hidden="false">prowess</span>
+          </span>
         </h1>
         <p className="hero-tagline">
           SOFTWARE DEVELOPMENT AND CONSULTING COMPANY

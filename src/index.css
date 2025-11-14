@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap');
+
 /* Reset and Base Styles */
 * {
   margin: 0;
@@ -7,19 +9,20 @@
 
 /* CSS Variables */
 :root {
-  --primary-orange: #ff6b35;
-  --secondary-orange: #ff8c42;
-  --dark-gray: #2c3e50;
-  --medium-gray: #6c757d;
-  --light-gray: #f8f9fa;
+  --primary-orange: #f97316;
+  --secondary-orange: #fb923c;
+  --accent-deep: #f97316;
+  --dark-gray: #1f2937;
+  --medium-gray: #4b5563;
+  --light-gray: #f9fafb;
   --white: #ffffff;
-  --black: #000000;
-  --gradient-orange: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
-  --shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
-  --neon-glow: 0 0 20px rgba(255, 107, 53, 0.5);
-  --glass-bg: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --shadow-dark: 0 8px 25px rgba(255, 107, 53, 0.4);
+  --off-white: #f8f6f3;
+  --gradient-orange: linear-gradient(135deg, #ffa94d 0%, #ff6b35 60%, #f97416 100%);
+  --shadow: 0 20px 45px rgba(17, 24, 39, 0.15);
+  --shadow-soft: 0 12px 35px rgba(249, 115, 22, 0.18);
+  --glass-bg: rgba(248, 250, 252, 0.15);
+  --glass-border: rgba(255, 255, 255, 0.45);
+  --shadow-dark: 0 24px 65px rgba(17, 24, 39, 0.35);
 }
 
 html {
@@ -27,11 +30,14 @@ html {
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Raleway', 'Inter', sans-serif;
   line-height: 1.6;
-  color: var(--dark-gray);
+  color: rgba(17, 24, 39, 0.92);
   overflow-x: hidden;
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+  background:
+    radial-gradient(circle at top right, rgba(255, 148, 86, 0.12), transparent 52%),
+    radial-gradient(circle at 18% 28%, rgba(255, 211, 164, 0.16), transparent 46%),
+    #ffffff;
   position: relative;
 }
 

@@ -1,21 +1,25 @@
 import React from 'react'
-import Navbar from './components/Navbar'
-import DataProwessSection from './components/DataProwessSection'
-import AboutSection from './components/AboutSection'
-import ServicesSection from './components/ServicesSection'
-import ContactSection from './components/ContactSection'
-import './App.css'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import Layout from './components/Layout'
+import ScrollToTop from './components/ScrollToTop'
+import Home from './pages/Home'
+import About from './pages/About'
+import Services from './pages/Services'
+import Contact from './pages/Contact'
 
-function App() {
-  return (
-    <div className="app">
-      <Navbar />
-      <DataProwessSection />
-      <AboutSection />
-      <ServicesSection />
-      <ContactSection />
-    </div>
-  )
-}
+const App = () => (
+  <BrowserRouter>
+    <ScrollToTop />
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Route>
+    </Routes>
+  </BrowserRouter>
+)
 
 export default App

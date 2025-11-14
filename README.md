@@ -1,4 +1,4 @@
-# HR Management System - Data Prowess
+# - Data Prowess
 
 A modern HR Management System built with Vite + React, featuring a split-screen design with Data Prowess branding and HR login functionality.
 

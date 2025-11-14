@@ -1,202 +1,206 @@
+/* ServicesSection.css - updated: smaller images, refined spacing */
+
 .services-section {
-  min-height: 100vh;
   width: 100%;
-  background: linear-gradient(135deg, #fafafa 0%, #ffffff 60%, #fafafa 100%);
-  padding: 6rem 2rem;
-  overflow: hidden;
+  padding: clamp(4rem, 6vw, 6rem) 1.5rem;
+  background: #ffffff;
+  position: relative;
 }
 
 .services-container {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
-}
-
-.services-header {
-  text-align: center;
-  margin-bottom: 2.25rem;
-}
-
-.services-title {
-  font-size: 3rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, #ff6b35, #d65e14);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: fadeInDown 0.8s ease forwards;
-}
-
-.title-underline {
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(90deg, #ff6b35, #ff8c42);
-  margin: 0.35rem auto 0;
-  border-radius: 2px;
-  animation: expandWidth 0.8s ease 0.3s forwards;
-}
-
-@keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes expandWidth {
-  from { width: 0; opacity: 0; }
-  to { width: 80px; opacity: 1; }
-}
-@keyframes fadeInUp {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ===== Service Cards ===== */
-.services-list {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 0;
+  padding: 0 1rem;
 }
 
-.service-row {
+/* Reduce image column from 50% -> 38% to lower visual weight */
+.service-item {
   display: flex;
   align-items: center;
-  gap: 2rem;
-  border-top: 1px solid #eee;
-  padding: 1.8rem 1rem;
+  gap: 2.25rem;
+  margin-bottom: 4rem;
   opacity: 0;
-  transform: translateY(24px);
-  transition: all 0.3s ease;
-  border-radius: 12px;
-  background: #fff;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-.service-row:first-child { border-top: none; }
-
-.services-section.visible .service-row {
-  animation: fadeInUp 0.5s ease forwards;
+.service-item.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.service-row:hover {
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
-  transform: translateY(-4px);
-  border-color: rgba(255, 107, 53, 0.15);
+.service-item--left {
+  flex-direction: row;
 }
 
-/* Alternate direction for even rows */
-.service-row:nth-child(even) {
+.service-item--right {
   flex-direction: row-reverse;
 }
 
-/* Image Section */
-.service-media {
-  flex: 0 0 260px;
-  position: relative;
+/* Image wrapper now smaller and constrained */
+.service-image-wrapper {
+  flex: 0 0 38%;
+  max-width: 38%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.service-image-wrap {
+/* Figure styles remain; use smaller decorative offset */
+.service-image-figure {
   position: relative;
-  aspect-ratio: 4 / 3;
-  border-radius: 14px;
-  overflow: hidden;
-  background: #fff5ef;
-  border: 1px solid #f3ece8;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-}
-
-.service-image {
-  position: absolute;
-  inset: 0;
+  margin: 0;
+  padding: 0;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition: transform .3s ease;
 }
 
-.service-image-wrap:hover .service-image {
-  transform: scale(1.03);
-}
-
-/* Number Badge */
-.service-index {
+/* Subtle dotted background - scaled down */
+.service-image-figure::before {
+  content: '';
   position: absolute;
-  bottom: -10px;
-  left: -10px;
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  display: grid;
-  place-items: center;
-  font-weight: 800;
-  font-size: 0.95rem;
-  color: #d65e14;
-  background: #fff;
-  border: 1px solid rgba(255,107,53,0.25);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  top: -14px;
+  left: -14px;
+  right: 14px;
+  bottom: 14px;
+  background-image: radial-gradient(circle, rgba(255, 107, 53, 0.12) 1px, transparent 1px);
+  background-size: 18px 18px;
+  z-index: -1;
+  border-radius: 6px;
 }
 
-/* Text Content */
-.service-body {
+/* Constrain image size and preserve aspect ratio */
+.service-image {
+  width: 100%;
+  max-width: 420px;    /* ensures the image never grows too large */
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  object-fit: cover;
+}
+
+/* Content area */
+.service-content {
   flex: 1;
-  display: grid;
-  gap: .6rem;
+  padding: 0 1rem;
+  min-width: 0; /* important so long text truncation works in flex */
 }
 
 .service-title {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #222;
+  font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #ff6b35;
+  margin: 0 0 1rem 0;
+  line-height: 1.25;
 }
 
-.service-accent {
+.service-divider {
+  display: block;
+  width: 60px;
   height: 3px;
-  width: 64px;
   background: linear-gradient(90deg, #ff6b35, #ff8c42);
+  margin: 0 0 1rem 0;
   border-radius: 2px;
 }
 
 .service-description {
-  color: #555;
+  color: #444;
+  line-height: 1.8;
   font-size: 1rem;
-  line-height: 1.65;
 }
 
-.service-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .5rem;
-  margin-top: .4rem;
+.service-description p {
+  margin: 0 0 1.25rem 0;
 }
 
-.tag {
-  font-size: .82rem;
-  font-weight: 700;
-  color: #d65e14;
-  background: rgba(255,107,53,0.10);
-  border: 1px solid rgba(255,107,53,0.25);
-  padding: .3rem .6rem;
-  border-radius: 999px;
+.service-description p:last-child {
+  margin-bottom: 0;
 }
 
-/* Responsive */
-@media (max-width: 900px) {
-  .service-row,
-  .service-row:nth-child(even) {
-    flex-direction: column;
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .service-item {
+    gap: 1.5rem;
+    margin-bottom: 3rem;
   }
-  .service-media {
-    width: 100%;
+
+  .service-image-wrapper {
+    flex: 0 0 42%;
+    max-width: 42%;
+  }
+
+  .service-image {
+    max-width: 360px;
   }
 }
 
 @media (max-width: 768px) {
-  .services-section { padding: 4rem 1.5rem; }
-  .services-title { font-size: 2.4rem; }
-  .service-title { font-size: 1.3rem; }
+  .services-section {
+    padding: 3rem 1.25rem;
+  }
+
+  /* Stack on mobile and center everything */
+  .service-item,
+  .service-item--left,
+  .service-item--right {
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 3.5rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .service-image-wrapper {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .service-image {
+    width: 92%;
+    max-width: 520px;
+    border-radius: 10px;
+  }
+
+  .service-content {
+    padding: 0;
+  }
+
+  .service-divider {
+    margin: 0 auto 1rem auto;
+  }
+
+  .service-image-figure::before {
+    top: -10px;
+    left: -10px;
+    right: 10px;
+    bottom: 10px;
+  }
 }
 
 @media (max-width: 480px) {
-  .services-section { padding: 3rem 1rem; }
-  .services-title { font-size: 2rem; }
-  .service-index {
-    width: 38px;
-    height: 38px;
-    font-size: 0.85rem;
+  .services-section {
+    padding: 2.5rem 1rem;
+  }
+
+  .service-item {
+    margin-bottom: 3rem;
+  }
+
+  .service-title {
+    font-size: 1.25rem;
+  }
+
+  .service-description {
+    font-size: 0.95rem;
+    text-align: left;
+  }
+
+  .service-image {
+    width: 100%;
+    max-width: 100%;
   }
 }

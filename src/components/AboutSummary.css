@@ -1,0 +1,109 @@
+.about-summary {
+  padding: clamp(4rem, 7vw, 6rem) 1.75rem;
+  background: #ffffff;
+}
+
+.about-summary__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(2.5rem, 5vw, 4rem);
+  align-items: center;
+}
+
+.about-summary__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.about-summary__eyebrow {
+  font-size: 0.82rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(249, 115, 22, 0.85);
+  margin: 0;
+}
+
+.about-summary__heading {
+  font-size: clamp(2rem, 4.8vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.3;
+  margin: 0;
+  color: rgba(17, 24, 39, 0.94);
+}
+
+.about-summary__heading strong {
+  background: var(--gradient-orange);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.about-summary__copy p {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: rgba(55, 65, 81, 0.92);
+}
+
+.about-summary__highlight {
+  font-weight: 600;
+  color: rgba(249, 115, 22, 0.85);
+}
+
+.about-summary__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 0.85rem 2.6rem;
+  margin-top: 1rem;
+  border-radius: 999px;
+  border: 2px solid rgba(249, 115, 22, 0.6);
+  letter-spacing: 0.18em;
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgba(249, 115, 22, 0.88);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.about-summary__cta:hover,
+.about-summary__cta:focus {
+  background: var(--gradient-orange);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: var(--shadow-soft);
+}
+
+.about-summary__visual {
+  position: relative;
+}
+
+.about-summary__frame {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 28px 60px rgba(17, 24, 39, 0.2);
+}
+
+.about-summary__frame::after {
+  display: none;
+}
+
+.about-summary__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .about-summary {
+    padding: 3.5rem 1.5rem;
+  }
+}
+
